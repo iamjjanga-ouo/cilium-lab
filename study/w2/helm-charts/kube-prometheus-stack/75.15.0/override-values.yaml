@@ -1,0 +1,18 @@
+alertmanager:
+  enabled: false
+grafana:
+  enabled: true
+  adminPassword: "cilium123"
+  defaultDashboardsTimezone: Asia/Seoul
+  nodeSelector:
+    kubernetes.io/hostname: k8s-ctr
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+  service:
+    type: NodePort
+    port: 3000
+    nodePort: 30300
+nodeExporter:
+  enabled: false

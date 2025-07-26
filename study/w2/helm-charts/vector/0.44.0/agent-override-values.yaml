@@ -1,0 +1,29 @@
+# helm upgrade --install vector-agent vector/vector -f agent-override-values.yaml --version 0.44.0 --namespace vector --create-namespace
+
+role: "Agent"
+
+customConfig:
+  data_dir: /vector-data-dir
+  api:
+    enabled: true
+    address: 127.0.0.1:8686
+    playground: false
+  sources:
+    kubernetes_logs:
+      type: kubernetes_logs
+      exclude_paths_glob_patterns: ["/var/log/containers/*_loki_*.log"]
+  sinks:
+    loki:
+      type: loki
+      inputs:
+        - kubernetes_logs
+      endpoint: http://loki-headless.loki:3100
+      encoding:
+        codec: json
+      labels:
+        job: vector-agent
+    # stdout:
+    #   type: console
+    #   inputs: [kubernetes_logs]
+    #   encoding:
+    #     codec: json
