@@ -86,6 +86,12 @@ hubble:
       nodePort: 31234
   metrics:
     enableOpenMetrics: true
+    dashboards:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+      labels:
+        release: kube-prometheus-stack
     enabled:
       - dns
       - drop
@@ -108,11 +114,6 @@ hubble:
             includeFilters:
               - source_pod: ["monitoring/"]
               - destination_pod: ["monitoring/"]
-          # - name: monitoring_ns-to-vector_ns
-          #   filePath: /var/run/cilium/hubble/events-system.log
-          #   includeFilters:
-          #     - source_pod: monitoring/
-          #     - destination_pod: vector/
 
 extraVolumes:
   - name: hubble-flowlogs-monitoring
@@ -133,8 +134,21 @@ extraContainers:
 
 prometheus:
   enabled: true
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: kube-prometheus-stack
+
+dashboards:
+  enabled: true
 
 operator:
   enabled: true
   prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      labels:
+        release: kube-prometheus-stack
+  dashboards:
     enabled: true

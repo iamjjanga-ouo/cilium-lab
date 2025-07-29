@@ -14,5 +14,21 @@ grafana:
     type: NodePort
     port: 3000
     nodePort: 30300
+prometheus:
+  enabled: true
+  prometheusSpec:
+    serviceMonitorSelector:
+      matchLabels:
+        release: kube-prometheus-stack
+    nodeSelector:
+      kubernetes.io/hostname: k8s-ctr
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+  service:
+    enabled: true
+    nodePort: 30090
+    type: NodePort
 nodeExporter:
-  enabled: false
+  enabled: true
