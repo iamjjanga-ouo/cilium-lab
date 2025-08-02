@@ -1,0 +1,27 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "l7-visibility"
+spec:
+  endpointSelector:
+    matchLabels:
+      "k8s:io.kubernetes.pod.namespace": default
+  egress:
+    - toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": default
+      toPorts:
+        - ports:
+            - port: "80" # default namespace에서 다른 Pod에 HTTP TCP 80 요청 허용
+              protocol: TCP
+            - port: "8080" # default namespace에서 다른 Pod에 HTTP TCP 8080 요청 허용
+              protocol: TCP
+          rules:
+            http: [{}] # 모든 HTTP 요청을 허용, L7 가시성 활성화
