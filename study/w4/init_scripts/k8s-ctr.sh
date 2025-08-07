@@ -3,7 +3,7 @@
 echo ">>>> K8S Controlplane config Start <<<<"
 
 echo "[TASK 1] Initial Kubernetes"
-curl --silent -o /root/kubeadm-init-ctr-config.yaml https://raw.githubusercontent.com/gasida/vagrant-lab/refs/heads/main/cilium-study/kubeadm-init-ctr-config.yaml
+curl --silent -o /root/kubeadm-init-ctr-config.yaml https://raw.githubusercontent.com/iamjjanga-ouo/cilium-lab/refs/heads/main/study/w4/kubeadm-configs/kubeadm-init-ctr-config.yaml
 K8SMMV=$(echo $3 | sed -En 's/^([0-9]+\.[0-9]+\.[0-9]+).*/\1/p')
 sed -i "s/K8S_VERSION_PLACEHOLDER/v${K8SMMV}/g" /root/kubeadm-init-ctr-config.yaml
 kubeadm init --config="/root/kubeadm-init-ctr-config.yaml"  >/dev/null 2>&1
