@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+# Inject Grafana Dashboard by Label
+labels:
+  - pairs:
+      grafana_dashboard: "1"
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: k8s-new
+    files:
+      - 15661_rev2.json
