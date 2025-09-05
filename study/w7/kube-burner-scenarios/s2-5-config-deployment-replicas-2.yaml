@@ -1,0 +1,19 @@
+global:
+  measurements:
+    - name: none
+
+jobs:
+  - name: create-deployments
+    jobType: create
+    jobIterations: 5
+    qps: 1
+    burst: 1
+    namespace: kube-burner-test
+    namespaceLabels: { kube-burner-job: delete-me }
+    waitWhenFinished: false
+    verifyObjects: false
+    preLoadImages: false
+    preLoadPeriod: 30s
+    objects:
+      - objectTemplate: s2-5-deployment.yaml
+        replicas: 2

@@ -1,0 +1,20 @@
+# jobIterations: 100, qps: 1, burst:100, objects.replicas: 1
+global:
+  measurements:
+    - name: none
+
+jobs:
+  - name: create-deployments
+    jobType: create
+    jobIterations: 100
+    qps: 1
+    burst: 100
+    namespace: kube-burner-test
+    namespaceLabels: { kube-burner-job: delete-me }
+    waitWhenFinished: false
+    verifyObjects: false
+    preLoadImages: false
+    preLoadPeriod: 30s
+    objects:
+      - objectTemplate: s1-deployment.yaml
+        replicas: 1

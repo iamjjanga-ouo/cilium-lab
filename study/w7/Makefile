@@ -1,5 +1,8 @@
+# SHELL = /bin/bash
 KIND_CLUSTER_NAME := myk8s
 KIND_IMAGE := kindest/node:v1.33.2
+
+include kube-burner-scenarios/kube-burner.mk
 
 
 create-cluster:
